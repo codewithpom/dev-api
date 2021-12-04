@@ -20,8 +20,6 @@ async function create_post(article_title: string, article_tags: Array<string> | 
 
     await axios.post("https://dev.to/api/articles", data, {headers: headers})
 
-    return "Done"
-
 }
 
 async function run(): Promise<void>{
@@ -32,10 +30,14 @@ async function run(): Promise<void>{
         try {
             tags = (JSON.parse(core.getInput("tags")) as Array<string>)
 
-            if (tags.length > 4) core.setFailed("Cannot add more than 4 tags")
+            if (tags.length > 4) {
+                core.setFailed("Cannot add more than 4 tags")
+                process.exit(1)
+            }
 
         } catch (e){
             core.setFailed("JSON could not be parsed check it again")
+            process.exit(1)
         }
         
         const body = core.getInput("body")
@@ -47,6 +49,7 @@ async function run(): Promise<void>{
             publish_boolean = false
         } else {
             core.setFailed("Parse error in published field check the field again")
+            process.exit(1)
         }
 
         const api_key = core.getInput("api_key")
@@ -54,10 +57,13 @@ async function run(): Promise<void>{
             await create_post(title, tags, body, publish_boolean, api_key)
         } catch (e){
             core.setFailed("Wrong API key was provided please check the key again")
+            process.exit(1)
         }
     } catch (e){
         core.setFailed("Total Information not provided or an unknown error")
+        process.exit(1)   
     }
+
 } 
 
 run()
