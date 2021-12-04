@@ -28,4 +28,5 @@ inputs:
   
 runs:
   using: 'node16'
+  run: 'npm i axios'
   main: 'lib/main.js'
