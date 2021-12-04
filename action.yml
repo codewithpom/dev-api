@@ -1,0 +1,31 @@
+name: 'Make DEV post'
+description: 'Make a a post on DEV (dev.to) using GitHub actions !!!'
+author: 'Padmashree Jha'
+inputs:
+  title: # change this
+    required: true
+    description: 'Title of the post'
+    default: 'API Testing'
+
+  tags:
+    required: true
+    description: 'Tags array of the post'
+    default: '[]'
+
+  body:
+    required: true
+    description: 'Makrdown body of the post'
+    default: "# Testing the API"
+  
+  publish:
+
+    required: true
+    description: "If you want it to be published add true and if you want it to be draft add false"
+    default: "false"
+  api_key:
+    required: true
+    description: "Your DEV api key"
+  
+runs:
+  using: 'node16'
+  main: 'lib/index.js'
