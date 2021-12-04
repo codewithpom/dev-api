@@ -1,6 +1,3 @@
-import { execSync } from "child_process";
-execSync("npm i axios @actions/core");
-
 import axios from "axios";
 import * as core from '@actions/core'
 
