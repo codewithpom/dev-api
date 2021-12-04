@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     
     steps: 
-      - uses: codewithpom/dev-api@v1.7
+      - uses: codewithpom/dev-api@v1.5
         with:
           title: Test post by GitHub Actions
-          tags: '["testing", "trying", "bug", "python"]'
+          tags: '["testing"]'
           body: '# Testing with GitHub actions'
-          api_key: "xzVKxtUP63ouYhJTP49F4Liv"
           publish: "false"
+          api_key: "xzVKxtUP63ouYhJTP49F4Liv"
 ```
 open an issue if you have any doubt
 
