@@ -38,8 +38,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const child_process_1 = __nccwpck_require__(2081);
-(0, child_process_1.execSync)("npm i axios @actions/core");
 const axios_1 = __importDefault(__nccwpck_require__(5543));
 const core = __importStar(__nccwpck_require__(482));
 function create_post(article_title, article_tags, markdown_body, published, api_key) {
@@ -56,7 +54,6 @@ function create_post(article_title, article_tags, markdown_body, published, api_
             "api-key": api_key
         };
         yield axios_1.default.post("https://dev.to/api/articles", data, { headers: headers });
-        return "Done";
     });
 }
 function run() {
@@ -66,11 +63,14 @@ function run() {
             let tags;
             try {
                 tags = JSON.parse(core.getInput("tags"));
-                if (tags.length > 4)
+                if (tags.length > 4) {
                     core.setFailed("Cannot add more than 4 tags");
+                    process.exit(1);
+                }
             }
             catch (e) {
                 core.setFailed("JSON could not be parsed check it again");
+                process.exit(1);
             }
             const body = core.getInput("body");
             let publish_string = core.getInput("publish");
@@ -83,6 +83,7 @@ function run() {
             }
             else {
                 core.setFailed("Parse error in published field check the field again");
+                process.exit(1);
             }
             const api_key = core.getInput("api_key");
             try {
@@ -90,10 +91,12 @@ function run() {
             }
             catch (e) {
                 core.setFailed("Wrong API key was provided please check the key again");
+                process.exit(1);
             }
         }
         catch (e) {
             core.setFailed("Total Information not provided or an unknown error");
+            process.exit(1);
         }
     });
 }
@@ -4695,14 +4698,6 @@ module.exports = eval("require")("debug");
 
 "use strict";
 module.exports = require("assert");
-
-/***/ }),
-
-/***/ 2081:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("child_process");
 
 /***/ }),
 
